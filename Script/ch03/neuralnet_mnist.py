@@ -12,9 +12,10 @@ def get_data():
     return x_test, t_test
 
 
-def init_network():
+def init_network(): # 打开文件sample_weight.pkl
+              #'rb'以二进制格式打开一个文件用于只读。文件指针将会放在文件的开头。这是默认模式。
     with open("sample_weight.pkl", 'rb') as f:
-        network = pickle.load(f)
+        network = pickle.load(f) # 打印network可知是W1,b2,W2...之类的参数,network是字典。
     return network
 
 

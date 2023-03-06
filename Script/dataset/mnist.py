@@ -108,21 +108,21 @@ def load_mnist(normalize=True, flatten=True, one_hot_label=False):
     with open(save_file, 'rb') as f:
         dataset = pickle.load(f)
     
-    if normalize:
+    if normalize: # 手写正规化过程
         for key in ('train_img', 'test_img'):
             dataset[key] = dataset[key].astype(np.float32)
             dataset[key] /= 255.0
             
-    if one_hot_label:
+    if one_hot_label: # 手写one-hot数组的转化过程
         dataset['train_label'] = _change_one_hot_label(dataset['train_label'])
         dataset['test_label'] = _change_one_hot_label(dataset['test_label'])
     
-    if not flatten:
+    if not flatten: # 如果flatten为假，则需要三维的图像，那么用reshape()手动把图像转化为3维数组
          for key in ('train_img', 'test_img'):
             dataset[key] = dataset[key].reshape(-1, 1, 28, 28)
 
     return (dataset['train_img'], dataset['train_label']), (dataset['test_img'], dataset['test_label']) 
-
+# 这里返回两个元组，元组就是不可更改的序列。而在mnist_show文件中，将第一个元组赋给(x_train, t_train)，将第二个元组赋给(x_test, t_test)
 
 if __name__ == '__main__':
     init_mnist()
